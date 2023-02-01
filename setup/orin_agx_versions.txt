@@ -1,0 +1,9 @@
+Python 3.8.10 (default, Jun 22 2022, 20:18:18) 
+[GCC 9.4.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import torch
+>>> torch.__version__
+'1.13.0a0+936e9305.nv22.11'
+>>> import torchvision
+>>> torchvision.__version__
+'0.14.0'
