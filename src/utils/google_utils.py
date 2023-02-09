@@ -19,10 +19,10 @@ def gsutil_getsize(url=''):
 def attempt_download(file, repo='WongKinYiu/yolov7'):
     # Attempt file download if does not exist
     file = Path(str(file).strip().replace("'", '').lower())
-
+'''
     if not file.exists():
         try:
-            response = requests.get(f'https://api.github.com/repos/{repo}/releases/latest').json()  # github api
+            response = requests.get(f'https://api.github.com/repos/{repo}/releases/71389134').json() # github api
             assets = [x['name'] for x in response['assets']]  # release assets
             tag = response['tag_name']  # i.e. 'v1.0'
         except:  # fallback plan
@@ -51,6 +51,7 @@ def attempt_download(file, repo='WongKinYiu/yolov7'):
                     print(f'ERROR: Download failure: {msg}')
                 print('')
                 return
+'''
 
 
 def gdrive_download(id='', file='tmp.zip'):
