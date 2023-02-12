@@ -13,7 +13,7 @@ def create_header():
     return h
 
 
-def create_detection_msg(img_msg: Image, detections: torch.Tensor) -> Detection2DArray:
+def create_detection_msg(img_msg: Image, detections: torch.Tensor, idx=-1) -> Detection2DArray:
     """
     :param img_msg: original ros image message
     :param detections: torch tensor of shape [num_boxes, 6] where each element is
@@ -25,7 +25,14 @@ def create_detection_msg(img_msg: Image, detections: torch.Tensor) -> Detection2
     # header
     header = create_header()
     detection_array_msg.header = header
-    for detection in detections:
+
+    if idx < 0:
+        det_range = range(0, len(detections))
+    else:
+        det_range = [idx]
+    # for detection in detections:
+    for i in det_range:
+        detection = detections[i]
         x1, y1, x2, y2, conf, cls = detection.tolist()
         single_detection_msg = Detection2D()
         single_detection_msg.header = header

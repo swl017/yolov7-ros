@@ -73,7 +73,7 @@ class YoloV7:
 
 
 class Yolov7Publisher:
-    def __init__(self, img_topic: str, weights: str, conf_thresh: float = 0.5,
+    def __init__(self, img_topic: str, weights: str, conf_thresh: float = 0.5, max_det: int = 1,
                  iou_thresh: float = 0.45, pub_topic: str = "yolov7_detections",
                  device: str = "cuda",
                  img_size: Union[Tuple[int, int], None] = (640, 640),
@@ -100,6 +100,7 @@ class Yolov7Publisher:
         self.img_size = img_size
         self.device = device
         self.class_labels = class_labels
+        self.max_det = max_det
 
         vis_topic = pub_topic + "visualization" if pub_topic.endswith("/") else \
             pub_topic + "/visualization"
@@ -150,21 +151,50 @@ class Yolov7Publisher:
         detections[:, :4] = rescale(
             [h_scaled, w_scaled], detections[:, :4], [h_orig, w_orig])
         detections[:, :4] = detections[:, :4].round()
+        
+        if max_det == 1:
+            # set maximum number of detections
+            max_conf = -1
+            max_conf_idx = -1
+            for i in range(0, len(detections)):
+                if detections[i, 4] > max_conf:
+                    max_conf = detections[i, 4]
+                    max_conf_idx = i
 
-        # publishing
-        detection_msg = create_detection_msg(img_msg, detections)
-        self.detection_publisher.publish(detection_msg)
+            # publishing
+            detection_msg = create_detection_msg(img_msg, detections, max_conf_idx)
+            self.detection_publisher.publish(detection_msg)
 
-        # visualizing if required
-        if self.visualization_publisher:
-            bboxes = [[int(x1), int(y1), int(x2), int(y2)]
-                      for x1, y1, x2, y2 in detections[:, :4].tolist()]
-            classes = [int(c) for c in detections[:, 5].tolist()]
-            vis_img = draw_detections(np_img_orig, bboxes, classes,
-                                      self.class_labels)
-            vis_msg = self.bridge.cv2_to_imgmsg(vis_img)
-            self.visualization_publisher.publish(vis_msg)
+            # visualizing if required
+            if self.visualization_publisher:
+                bboxes = [[]]
+                classes = []
+                if max_conf_idx < 0:
+                    bboxes = [[int(x1), int(y1), int(x2), int(y2)]
+                            for x1, y1, x2, y2 in detections[:, :4].tolist()]
+                    classes = [int(c) for c in detections[:, 5].tolist()]
+                else:
+                    bboxes = [detections[max_conf_idx, :4].tolist()]
+                    classes = [int(detections[max_conf_idx, 5])]
+                vis_img = draw_detections(np_img_orig, bboxes, classes,
+                                        self.class_labels)
+                vis_msg = self.bridge.cv2_to_imgmsg(vis_img)
+                self.visualization_publisher.publish(vis_msg)
+                
+        else:
+            # publishing
+            detection_msg = create_detection_msg(img_msg, detections)
+            self.detection_publisher.publish(detection_msg)
 
+            # visualizing if required
+            if self.visualization_publisher:
+                bboxes = [[int(x1), int(y1), int(x2), int(y2)]
+                        for x1, y1, x2, y2 in detections[:, :4].tolist()]
+                classes = [int(c) for c in detections[:, 5].tolist()]
+                vis_img = draw_detections(np_img_orig, bboxes, classes,
+                                        self.class_labels)
+                vis_msg = self.bridge.cv2_to_imgmsg(vis_img)
+                self.visualization_publisher.publish(vis_msg)
 
 if __name__ == "__main__":
     rospy.init_node("yolov7_node")
@@ -176,6 +206,7 @@ if __name__ == "__main__":
     img_topic = rospy.get_param(ns + "img_topic")
     out_topic = rospy.get_param(ns + "out_topic")
     conf_thresh = rospy.get_param(ns + "conf_thresh")
+    max_det = rospy.get_param(ns + "max_det")
     iou_thresh = rospy.get_param(ns + "iou_thresh")
     queue_size = rospy.get_param(ns + "queue_size")
     img_size = rospy.get_param(ns + "img_size")
@@ -205,6 +236,7 @@ if __name__ == "__main__":
         device=device,
         visualize=visualize,
         conf_thresh=conf_thresh,
+        max_det=max_det,
         iou_thresh=iou_thresh,
         img_size=(img_size, img_size),
         queue_size=queue_size,
