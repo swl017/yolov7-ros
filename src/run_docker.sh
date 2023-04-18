@@ -1,0 +1,1 @@
+nvidia-docker run --name swl017_yolov7 -it --rm -v /home/usrg/drone_dataset/yolo/:/data/ -v $(pwd):/yolov7 --shm-size=64g swl017/yolov7

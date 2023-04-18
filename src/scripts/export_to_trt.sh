@@ -1,0 +1,1 @@
+python ./tensorrt-python/export.py -o yolov7-tiny-drone.onnx -e yolov7-tiny-drone-nms.trt -p fp16

@@ -1,0 +1,1 @@
+nvidia-docker run --name swl017_yolov7 -it -v /home/usrg/drone_dataset/yolo/drone-f450-fieldtest-obj1/:/data/ -v $(pwd):/yolov7 --shm-size=64g swl017/yolov7

@@ -1,0 +1,3 @@
+[submodule "src/tensorrt-python"]
+	path = src/tensorrt-python
+	url = https://github.com/Linaom1214/tensorrt-python.git
