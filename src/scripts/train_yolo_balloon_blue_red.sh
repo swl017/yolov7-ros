@@ -1,0 +1,11 @@
+python train.py \
+    --workers 8 \
+    --device 0 \
+    --epochs 1500 \
+    --batch-size 16 \
+    --data data/balloon-blue-red.yaml \
+    --img 640 640 \
+    --cfg cfg/training/yolov7-balloon-blue-red.yaml \
+    --weights '' \
+    --name yolov7-balloon-blue-red \
+    --hyp data/hyp.scratch.p5.yaml
