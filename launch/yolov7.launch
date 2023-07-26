@@ -8,9 +8,12 @@
     ns="yolov7">
         <!-- Download the official weights from the original repo -->
         <param name="weights_path" type="str"
-        value="$(find yolov7_ros)/weight/drone/yolov7-tiny-droneF450FieldtestObj13.pt"/>
-        <!-- value="$(find yolov7_ros)/weight/drone/yolov7-tiny-drone-gazebo.pt"/> -->
+        value="$(find yolov7_ros)/weight/drone/yolov7-tiny-droneF450FieldtestObj13ADD.pt"/>
+        <!-- value="$(find yolov7_ros)/weight/drone/yolov7-drone-f450-ft-add.pt"/> -->
         <!-- value="$(find yolov7_ros)/weight/drone/yolov7-drone.pt"/> -->
+        <!-- value="$(find yolov7_ros)/weight/drone/yolov7-tiny-drone-f450.pt"/> -->
+        <!-- value="$(find yolov7_ros)/weight/drone/yolov7-tiny-droneF450FieldtestObj13.pt"/> -->
+        <!-- value="$(find yolov7_ros)/weight/drone/yolov7-tiny-drone-gazebo.pt"/> -->
         <!-- value="$(find yolov7_ros)/weight/drone/yolov7-tiny-drone.pt"/> -->
         <!-- Path to a class_labels.txt file containing your desired class labels. The i-th entry corresponds to the i-th class id. For example, in coco class label 0 corresponds to 'person'. Files for the coco and berkeley deep drive datasets are provided in the 'class_labels/' directory. If you leave it empty then no class labels are visualized.-->
         <param name="classes_path" type="str" value="$(find yolov7_ros)/class_labels/drone.txt" />
@@ -19,7 +22,7 @@
         <!-- topic name for the detection output -->
         <param name="out_topic" type="str" value="yolov7" />
         <!-- confidence threshold -->
-        <param name="conf_thresh" type="double" value="0.5" />
+        <param name="conf_thresh" type="double" value="0.42" />
         <param name="max_det" type="int" value="$(arg max_det)" />
         <!-- intersection over union threshold -->
         <param name="iou_thresh" type="double" value="0.45" />
