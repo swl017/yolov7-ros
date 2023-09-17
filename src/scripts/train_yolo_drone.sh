@@ -3,9 +3,9 @@ python train.py \
     --device 0 \
     --epochs 1500 \
     --batch-size 16 \
-    --data data/drone-f450-ft.yaml \
+    --data data/drone-dronecop.yaml \
     --img 640 640 \
     --cfg cfg/training/yolov7-drone.yaml \
-    --weights 'yolov7-drone.pt' \
-    --name yolov7-drone-f450-ft \
+    --weights '../weight/drone/yolov7-drone.pt' \
+    --name yolov7-drone-dronecop \
     --hyp data/hyp.scratch.p5.yaml

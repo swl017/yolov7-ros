@@ -1,0 +1,14 @@
+python -m torch.distributed.launch \
+    --nproc_per_node 4 \
+    --master_port 9527 train.py \
+    --workers 8 \
+    --device 0,1,2,3 \
+    --sync-bn \
+    --epoch 300 \
+    --batch-size 32 \
+    --data data/drone-dronecop.yaml \
+    --img 640 640 \
+    --cfg cfg/training/yolov7-drone.yaml \
+    --weights 'runs/train/yolov7-drone-dronecop128b3/weights/best.pt' \
+    --name yolov7-drone-dronecop32b \
+    --hyp data/hyp.scratch.p5.yaml

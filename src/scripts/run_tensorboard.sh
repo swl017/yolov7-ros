@@ -1,0 +1,1 @@
+tensorboard --logdir train/ --host 192.168.0.3 --port 6007

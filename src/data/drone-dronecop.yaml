@@ -1,0 +1,49 @@
+# COCO 2017 dataset http://cocodataset.org
+
+# download command/URL (optional)
+# download: bash ./scripts/get_coco.sh
+
+# train and val data as 1) directory: path/images/, 2) file: path/images.txt, or 3) list: [path1/images/, path2/images/]
+train: [
+"/data/Dronecop/image/Ardupilot/Ardupilot_case1(2334)", "/data/Dronecop/image/Ardupilot/Ardupilot_case2(2334)",
+"/data/Dronecop/image/crazyflie/case1", "/data/Dronecop/image/crazyflie/case2",
+"/data/Dronecop/image/dji_mavic/case1", "/data/Dronecop/image/dji_mavic/case2",
+"/data/Dronecop/image/dji_spark/spark_case1", "/data/Dronecop/image/dji_spark/spark_case2",
+"/data/Dronecop/image/parrot_anafi/case1", "/data/Dronecop/image/parrot_anafi/case2",
+"/data/Dronecop/image/parrot_bebop/case1(2334)", "/data/Dronecop/image/parrot_bebop/case2(2334)",
+"/data/Dronecop/image/Pixhawk/case1(2334)", "/data/Dronecop/image/Pixhawk/case2(2334)",
+"/data/Dronecop/image/skydio/case1", "/data/Dronecop/image/skydio/case2",
+"/data/Dronecop/image/skywalker/case1(2334)", "/data/Dronecop/image/skywalker/case2(2334)",
+"/data/Dronecop/image/Yuneec_typoon_Q500/case1(2334)", "/data/Dronecop/image/Yuneec_typoon_Q500/case2(2334)",
+]
+
+val: [
+"/data/Dronecop/image/Ardupilot/Ardupilot_case3(2332)",
+"/data/Dronecop/image/crazyflie/case3",
+"/data/Dronecop/image/dji_mavic/case3",
+"/data/Dronecop/image/dji_spark/spark_case3",
+"/data/Dronecop/image/parrot_anafi/case3",
+"/data/Dronecop/image/parrot_bebop/case3(2332)",
+"/data/Dronecop/image/Pixhawk/case3(2332)",
+"/data/Dronecop/image/skydio/case3",
+"/data/Dronecop/image/skywalker/case3(2332)",
+"/data/Dronecop/image/Yuneec_typoon_Q500/case3(2332)",
+]
+test: [
+"/data/Dronecop/image/Ardupilot/Ardupilot_case3(2332)",
+"/data/Dronecop/image/crazyflie/case3",
+"/data/Dronecop/image/dji_mavic/case3",
+"/data/Dronecop/image/dji_spark/spark_case3",
+"/data/Dronecop/image/parrot_anafi/case3",
+"/data/Dronecop/image/parrot_bebop/case3(2332)",
+"/data/Dronecop/image/Pixhawk/case3(2332)",
+"/data/Dronecop/image/skydio/case3",
+"/data/Dronecop/image/skywalker/case3(2332)",
+"/data/Dronecop/image/Yuneec_typoon_Q500/case3(2332)",
+]
+
+# number of classes
+nc: 2
+
+# class names
+names: [ 'drone', 'drone-carrier']
