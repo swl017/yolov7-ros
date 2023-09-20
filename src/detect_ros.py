@@ -15,7 +15,7 @@ import numpy as np
 import rospy
 
 from vision_msgs.msg import Detection2DArray, Detection2D, BoundingBox2D
-from sensor_msgs.msg import Image
+from sensor_msgs.msg import Image, CompressedImage
 from cv_bridge import CvBridge
 
 
@@ -107,6 +107,9 @@ class Yolov7Publisher:
         self.visualization_publisher = rospy.Publisher(
             vis_topic, Image, queue_size=queue_size
         ) if visualize else None
+        self.visualization_publisher_compressed = rospy.Publisher(
+            vis_topic+"/compressed", CompressedImage, queue_size=queue_size
+        ) if visualize else None
 
         self.bridge = CvBridge()
 
@@ -178,8 +181,15 @@ class Yolov7Publisher:
                     classes = [int(detections[max_conf_idx, 5])]
                 vis_img = draw_detections(np_img_orig, bboxes, classes,
                                         self.class_labels)
-                vis_msg = self.bridge.cv2_to_imgmsg(vis_img)
+                vis_msg = self.bridge.cv2_to_imgmsg(vis_img, encoding='bgr8')
+                # vis_msg = self.bridge.cv2_to_imgmsg(vis_img)
                 self.visualization_publisher.publish(vis_msg)
+                vis_msg_compressed = CompressedImage()
+                vis_msg_compressed.header.stamp = vis_msg.header.stamp
+                vis_msg_compressed.format = "jpeg"
+                vis_msg_compressed.data = np.array(cv2.imencode('.jpg', vis_img)[1]).tobytes()
+                self.visualization_publisher_compressed.publish(vis_msg_compressed)
+
                 
         else:
             # publishing
@@ -193,8 +203,15 @@ class Yolov7Publisher:
                 classes = [int(c) for c in detections[:, 5].tolist()]
                 vis_img = draw_detections(np_img_orig, bboxes, classes,
                                         self.class_labels)
-                vis_msg = self.bridge.cv2_to_imgmsg(vis_img)
+                vis_msg = self.bridge.cv2_to_imgmsg(vis_img, encoding='bgr8')
+                # vis_msg = self.bridge.cv2_to_imgmsg(vis_img)
                 self.visualization_publisher.publish(vis_msg)
+                vis_msg_compressed = CompressedImage()
+                vis_msg_compressed.header.stamp = vis_msg.header.stamp
+                vis_msg_compressed.format = "jpeg"
+                vis_msg_compressed.data = np.array(cv2.imencode('.jpg', vis_img)[1]).tobytes()
+                self.visualization_publisher_compressed.publish(vis_msg_compressed)
+
 
 if __name__ == "__main__":
     rospy.init_node("yolov7_node")
