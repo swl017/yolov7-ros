@@ -4,17 +4,16 @@
     <arg name="max_det" default="1" />
 
 <group ns="$(arg ns)" >
-    <node pkg="yolov7_ros" type="detect_ros.py" name="detect" output="screen"
-    ns="yolov7">
+    <node pkg="yolov7_ros" type="detect_ros.py" name="detect" output="screen">
         <!-- Download the official weights from the original repo -->
         <param name="weights_path" type="str"
-        value="$(find yolov7_ros)/weight/drone/yolov7-tiny-droneF450FieldtestObj13ADD.pt"/>
+        value="$(find yolov7_ros)/weight/drone/yolov7-tiny-drone-gazebo.pt"/>
+        <!-- value="$(find yolov7_ros)/weight/drone/yolov7-tiny-droneF450FieldtestObj13ADD.pt"/> -->
         <!-- value="$(find yolov7_ros)/weight/drone/yolov7-tiny-droneF450FieldtestObj13ADD_sima.pt"/> -->
         <!-- value="$(find yolov7_ros)/weight/drone/yolov7-drone-f450-ft-add.pt"/> -->
         <!-- value="$(find yolov7_ros)/weight/drone/yolov7-drone.pt"/> -->
         <!-- value="$(find yolov7_ros)/weight/drone/yolov7-tiny-drone-f450.pt"/> -->
         <!-- value="$(find yolov7_ros)/weight/drone/yolov7-tiny-droneF450FieldtestObj13.pt"/> -->
-        <!-- value="$(find yolov7_ros)/weight/drone/yolov7-tiny-drone-gazebo.pt"/> -->
         <!-- value="$(find yolov7_ros)/weight/drone/yolov7-tiny-drone.pt"/> -->
         <!-- Path to a class_labels.txt file containing your desired class labels. The i-th entry corresponds to the i-th class id. For example, in coco class label 0 corresponds to 'person'. Files for the coco and berkeley deep drive datasets are provided in the 'class_labels/' directory. If you leave it empty then no class labels are visualized.-->
         <param name="classes_path" type="str" value="$(find yolov7_ros)/class_labels/drone.txt" />
